@@ -1,0 +1,186 @@
+body {
+    background-color: #f8f9fa;
+    width: 100%;
+  }
+  
+  .fakeimg {
+    height: 200px;
+    background: #aaa;
+  }
+
+  .carousel {
+    height: 200px;
+    background: #aaa;
+  }
+
+  footer {
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+    padding: 15px;
+    margin-top: 10px;
+    z-index: 1;
+  }
+
+  .form g-recaptcha {
+    margin: 0 auto;
+  }
+  
+  h1 {
+    color: #007bff;
+  }
+  
+  .container {
+    background-color: beige;
+    text-align: center;
+    width: 100%;
+  }
+
+  .container li {
+    align-content: center;
+  }
+
+  .header {
+    position:relative;
+    text-align:center;
+    background: linear-gradient(60deg, rgba(84,58,183,1) 0%, rgba(0,172,193,1) 100%);
+    color:white;
+    width: 100%;
+}
+
+.header h1 {
+    font-family: Brush Script MT;
+}
+
+.header_card {
+    background-color: white;
+}
+
+.logo {
+    width:400px;
+    fill:white;
+    display:inline-block;
+    vertical-align: middle;
+    border: #0001fc solid 5px;
+    margin-top: 32px;
+    border-radius: 24px;
+    box-shadow: 0px 8px 16px rgba(0,0,0,0.4);
+}
+  
+.inner-header {
+    height:100px;
+    width:100%;
+    margin: 10px;
+    padding: 10px;
+}
+  
+.flex { /*Flexbox for containers*/
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+  
+.waves {
+    position:relative;
+    width: 100%;
+    height:13vh;
+    margin-bottom:-7px; /*Fix for safari gap*/
+    min-height:100px;
+    max-height:150px;
+    padding-top: 16px;
+}
+
+.content {
+    position:relative;
+    height:20vh;
+    text-align:center;
+    background-color: white;
+}
+  
+  /* Animation */
+  
+.parallax > use {
+    animation: move-forever 25s cubic-bezier(.55,.5,.45,.5)     infinite;
+}
+.parallax > use:nth-child(1) {
+    animation-delay: -2s;
+    animation-duration: 7s;
+}
+.parallax > use:nth-child(2) {
+    animation-delay: -3s;
+    animation-duration: 10s;
+}
+.parallax > use:nth-child(3) {
+    animation-delay: -4s;
+    animation-duration: 13s;
+}
+.parallax > use:nth-child(4) {
+    animation-delay: -5s;
+    animation-duration: 20s;
+}
+@keyframes move-forever {
+    0% {
+     transform: translate3d(-90px,0,0);
+    }
+    100% { 
+      transform: translate3d(85px,0,0);
+    }
+}
+/*Shrinking for mobile*/
+@media (max-width: 768px) {
+    .waves {
+      height:40px;
+      min-height:40px;
+    }
+    .content {
+      height:30vh;
+    }
+    h1 {
+      font-size:24px;
+    }
+}
+
+.header h1 {
+    font-size: 48px;
+    font-family: 'Lato', sans-serif;
+    font-weight: 300;
+    letter-spacing: 2px;
+}
+
+.header p {
+    font-family: 'Lato', sans-serif;
+    letter-spacing: 1px;
+    font-size: 14px;
+    color: #333333;
+}
+
+/* Create two unequal columns that floats next to each other */
+
+/* Left column */
+
+.leftcolumn {
+  float: left;
+  width: 75%;
+}
+
+/* Right Column */
+
+.rightcolumn {
+  float: left;
+  width: 25%;
+  background-color: #dcf7f7;
+  padding-left: 20px;
+}
+
+form {
+  max-width: 600px;
+  margin: 0 auto;
+  padding-bottom: 15px;
+}
+
+.g-recaptcha {
+  margin: 0 auto;
+  align-content: center;
+  padding-bottom: 3px;
+}

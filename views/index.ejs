@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <%- include('partials/header') %>
+</head>
+<body>
+
+    <%- include('partials/head') %>
+    <%- include('partials/navbar') %>
+
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-sm-4">
+                <h2>About Us</h2>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed auctor lacus eget neque fermentum, vitae placerat velit consectetur. Sed euismod, purus ut dictum semper, metus justo consectetur nunc, vitae lobortis est arcu vel ex. Nulla facilisi. Sed ut orci at felis scelerisque interdum ut id arcu. Integer ullamcorper, sapien id finibus dictum, erat massa dictum neque, vitae tempus ligula dolor vel neque.</p>
+                <div id="demo" class="carousel slide" data-bs-ride="carousel">
+                    <!--Indicators/dots-->
+                    <div class="carousel-indicators">
+                        <button type="button" data-bs-target="#demo" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                        <button type="button" data-bs-target="#demo" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                        <button type="button" data-bs-target="#demo" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                    </div>
+                    
+                    <!--The Slideshow/carousel-->
+                    
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <img src="img_mountains.jpg" alt="Mountains" class="d-block w-100">
+                        </div>
+                        <div class="carousel-item">
+                            <img src="img_lights.jpg" alt="Lights" class="d-block w-100">
+                        </div>
+                        <div class="carousel-item">
+                            <img src="img_nature.jpg" alt="Nature" class="d-block w-100">
+                        </div>
+                    </div>
+
+                    <!--Left and right controls/icons-->
+
+                    <button class="carousel-control-prev" type="button" data-bs-target="#demo" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#demo" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                </div>
+                <p>Some text about me in culpa qui officia deserunt mollit anim..</p>
+                <h3 class="mt-4">Usefull Links</h3>
+                <p>Lorem ipsum dolor sit ame.</p>
+                <ul class="nav nav-pills flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/babout">Pick 'n Ink Brackenfell</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Pick 'n Ink Strand</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link disabled" href="#">Disabled</a>
+                    </li>
+                </ul>
+                <hr class="d-sm-none">
+            </div>
+            <div class="col-sm-8">
+                <h2>Specials</h2>
+                <h5>Title description, Dec 7, 2020</h5>
+                <div id="demo1" class="carousel slide" data-bs-ride="carousel">
+                    <!--Indicators/dots-->
+                    <div class="carousel-indicators">
+                        <button type="button" data-bs-target="#demo1" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                        <button type="button" data-bs-target="#demo1" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                        <button type="button" data-bs-target="#demo1" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                    </div>
+                    
+                    <!--The Slideshow/carousel-->
+                    
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <img src="img_mountains.jpg" alt="Mountains" class="d-block w-100">
+                        </div>
+                        <div class="carousel-item">
+                            <img src="img_lights.jpg" alt="Lights" class="d-block w-100">
+                        </div>
+                        <div class="carousel-item">
+                            <img src="img_nature.jpg" alt="Nature" class="d-block w-100">
+                        </div>
+                    </div>
+
+                    <!--Left and right controls/icons-->
+
+                    <button class="carousel-control-prev" type="button" data-bs-target="#demo1" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#demo1" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                </div>
+                <p>Some text..</p>
+                <p>Sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.</p>
+          
+                <h2 class="mt-5">TITLE HEADING</h2>
+                <h5>Title description, Sep 2, 2020</h5>
+                <div class="fakeimg">Fake Image</div>
+                <p>Some text..</p>
+                <p>Sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.</p>
+            </div>
+        </div>
+        <!--Chat button-->
+        <button id="chat-button">Chat</button>
+        <!--Chat popup-->
+        <div id="chat-popup">
+            <div class="chat-header">Live chat</div>
+            <div class="chat-body">
+                <ul id="message"></ul>
+            </div>
+            <form id="form">
+                <input id="input" autocomplete="off" placeholder="Type your message here...."/><button id="send">Send</button>
+            </form>
+        </div>
+        <script type="text/html" src="/socket.io/client-dist/socket.io.js"></script>
+        <script>
+            const socket = io();
+
+            // Toggle chat popup
+            const chatButton = document.querySelector('#chat-button');
+            const chatPopup = document.querySelector('#chat-popup');
+            chatButton.addEventListener('click', () => {
+            chatPopup.style.display = chatPopup.style.display === 'none' || chatPopup.style.display === '' ? 'block' : 'none';
+            });
+
+            // Handle form submit
+            document.querySelector('#form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const input = document.querySelector('#input');
+            const msg = input.value;
+  
+            // Send message to the server
+            if (msg) {
+                socket.emit('chatMessage', msg);
+                input.value = '';
+                }
+            });
+
+            // Display received message in the chat window
+            socket.on('chatMessage', (msg) => {
+                const messages = document.querySelector('#messages');
+                const li = document.createElement('li');
+                li.textContent = msg;
+                messages.appendChild(li);
+            });
+        </script>
+    </div>
+    
+    <%- include('partials/footer') %>
+</body>
+</html>

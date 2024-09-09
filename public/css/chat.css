@@ -1,0 +1,78 @@
+body { font-family: Arial, sans-serif; }
+    
+    /* Chat Widget button */
+    #chat-button {
+      position: fixed;
+      /* bottom: 20px; */
+      right: 20px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      padding: 15px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    
+    /* Chat popup styling */
+    #chat-popup {
+      display: none; /* Initially hidden */
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 300px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      background-color: white;
+      z-index: 1000;
+    }
+    
+    #chat-header {
+      background-color: #007bff;
+      color: white;
+      padding: 10px;
+      border-top-left-radius: 10px;
+      border-top-right-radius: 10px;
+      font-weight: bold;
+      text-align: center;
+    }
+
+    #chat-body {
+      padding: 10px;
+      max-height: 300px;
+      overflow-y: auto;
+    }
+
+    #messages {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    #messages li {
+      padding: 5px;
+      border-bottom: 1px solid #ccc;
+    }
+
+    #form {
+      display: flex;
+      padding: 10px;
+      border-top: 1px solid #ccc;
+    }
+
+    #input {
+      flex: 1;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    #send {
+      background-color: #007bff;
+      color: white;
+      border: none;
+      padding: 10px;
+      border-radius: 5px;
+      margin-left: 5px;
+      cursor: pointer;
+    }
