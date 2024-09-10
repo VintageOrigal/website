@@ -21,37 +21,7 @@ const chatId = process.env.TELEGRAM_CHAT_ID;
 const bot = new TelegramBot(telegramBotToken, { polling: true });
 
 
-// serve the chat widget
-app.get('/', (req, res) => {
-    res.sendFile(__dirname, 'views');
-});
 
-// WebSocket Connection
-io.on('connection', (socket) => {
-    console.log('New user connected');
-
-    // Handle incoming chat messages
-    socket.on('chatMessage', (msg) => {
-        console.log('Message received: ', msg);
-
-        // Send message to Telegram
-        bot.sendMessage(chatID, 'New message from chat: &{msg}')
-        .then(() => {
-            console.log('Message sent to Telegram');
-        })
-        .catch((err) => {
-            console.error('Error sending message to Telegram:', err);
-        });
-
-        // Broadcast the message to all users in real-time
-        io.emit('chatMessage', msg);
-    });
-
-    // Handle user disconnecting
-    socket.on('disconnect', () => {
-        console.log('User disconnected');
-    });
-});
 
 // Set EJS as the template engine
 app.set('view engine', 'ejs');

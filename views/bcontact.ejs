@@ -10,7 +10,7 @@
 
   <div class="container mt-5">
     <h1>Contact Us</h1>
-    <form action="/bcontact" method="POST">
+    <form action="/bcontact" method="POST" onsubmit="return validateForm()">
       <div class="mb-3">
         <label for="name" class="form-label">First Name</label>
         <input type="text" class="form-control" id="name" name="name" required>
@@ -37,5 +37,6 @@
   </div>
 
   <%- include('partials/footer') %>
+  <script src="/js/form-validation.js"></script>
 </body>
 </html>

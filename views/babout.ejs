@@ -4,14 +4,136 @@
   <%- include('partials/header') %>
 </head>
 <body>
-  <%- include('partials/head') %>
-  <%- include('partials/navbar') %>
 
-  <div class="container mt-5">
-    <h1><%= title %> <%= branch %></h1>
-    <p><%= description %></p>
-  </div>
+    <%- include('partials/head') %>
+    <%- include('partials/navbar') %>
 
-  <%- include('partials/footer') %>
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-sm-4">
+                <h2>About Pick 'n Ink Brackenfell</h2>
+                <p>Pick 'n Ink Brackenfell was esstablised by Annenele Nortje in 2006.<br>
+                    We specialize in beautiful and functional products for home and office printer.</p>
+                </p>
+                <div id="demo" class="carousel slide" data-bs-ride="carousel">
+                    <!--Indicators/dots-->
+                    <div class="carousel-indicators">
+                        <button type="button" data-bs-target="#demo" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                        <button type="button" data-bs-target="#demo" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                        <button type="button" data-bs-target="#demo" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                    </div>
+                    
+                    <!--The Slideshow/carousel-->
+                    
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <img src="/img/IMG_0776.jpg" alt="Mountains" class="d-block w-100">
+                        </div>
+                        <div class="carousel-item">
+                            <img src="/img/brout.jpg" alt="Lights" class="d-block w-100">
+                        </div>
+                        <div class="carousel-item">
+                            <img src="/img/strand.jpg" alt="Nature" class="d-block w-100">
+                        </div>
+                    </div>
+
+                    <!--Left and right controls/icons-->
+
+                    <button class="carousel-control-prev" type="button" data-bs-target="#demo" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#demo" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                </div>
+                <p>We have 2 branches <br>
+                Located in <strong>Brackenfell</strong> and <strong>Strand</strong></p>
+
+                <hr>
+                <!-- Embedded Map Iframe -->
+                <div class="map-container" style="margin-top: 20px;">
+                <h2>Our Location</h2>
+                <iframe class="map"
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2342.1576731940613!2d18.68300166606675!3d-33.88163962948122!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1dcc51130d5322f7%3A0x25ab8ce92233667a!2sPick%20&#39;n%20Ink%20Brackenfell!5e0!3m2!1sen!2sza!4v1725969550578!5m2!1sen!2sza" 
+                  allowfullscreen="" 
+                  loading="lazy"></iframe>
+                </div>
+                
+                <hr>
+
+                <h3 class="mt-4">Usefull Links</h3>
+                <p>Some usefull links.</p>
+                <ul class="nav nav-pills flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/babout">Pick 'n Ink Brackenfell</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/sabout">Pick 'n Ink Strand</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link disabled" href="#">Knowledge Base</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link disabled" href="#">Printer Repairs</a>
+                    </li>
+                </ul>
+                <hr class="d-sm-none">
+            </div>
+            <div class="col-sm-8">
+                <h2>New Arrivals</h2>
+                <h5>New Products, Sept 10, 2024</h5>
+                <div id="demo1" class="carousel slide" data-bs-ride="carousel">
+                    <!--Indicators/dots-->
+                    <div class="carousel-indicators">
+                        <button type="button" data-bs-target="#demo1" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                        <button type="button" data-bs-target="#demo1" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                        <button type="button" data-bs-target="#demo1" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                    </div>
+                    
+                    <!--The Slideshow/carousel-->
+                    
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <img src="IMG_0776.JPG" alt="Mountains" class="d-block w-100">
+                        </div>
+                        <div class="carousel-item">
+                            <img src="img_lights.jpg" alt="Lights" class="d-block w-100">
+                        </div>
+                        <div class="carousel-item">
+                            <img src="img_nature.jpg" alt="Nature" class="d-block w-100">
+                        </div>
+                    </div>
+
+                    <!--Left and right controls/icons-->
+
+                    <button class="carousel-control-prev" type="button" data-bs-target="#demo1" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#demo1" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                </div>
+                <p>Some text..</p>
+                <p>Sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.</p>
+          
+                <hr>
+
+                <h2 class="mt-5">HP Firmware upgrade</h2>
+                <h5>Title description, Sep 2, 2020</h5>
+                <div class="fakeimg">Fake Image</div>
+                <p>Some text..</p>
+                <p>Sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.</p>
+            </div>
+        </div>
+    </div>
+    
+    <%- include('partials/footer') %>
 </body>
 </html>
