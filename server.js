@@ -48,8 +48,8 @@ app.get('/sprice', (req, res) => {
     res.render('sprice', { title: 'Price', sitetitle: 'Pick n Ink', branch: 'Strand', description: 'Our Price list' });
 })
 
-app.get('/features', (req, res) => {
-  res.render('features', { title: 'Features', sitetitle: 'Pick n Ink', branch: 'Pick n Ink', features: ['Feature 1', 'Feature 2', 'Feature 3'] });
+app.get('/service', (req, res) => {
+  res.render('service', { title: 'Service', sitetitle: 'Pick n Ink', branch: 'Pick n Ink', features: ['Feature 1', 'Feature 2', 'Feature 3'] });
 });
 
 app.get('/babout', (req, res) => {
@@ -139,6 +139,45 @@ app.post('/bcontact', async (req, res) => {
       res.status(500).send('An error occurred. Please try again later.');
     }
 });
+
+// GeoLocation
+
+app.get('/getPrice', (req, res) => {
+  const { lat, long } = req.query;
+
+  const brackenfell = { lat: -33.8786, long: 18.7051, price: 100 };
+  const strand = { lat: -34.1065, long: 18.8275, price: 120 };
+
+  const distanceToBrackenfell = calculateDistance(lat, long, brackenfell.lat, brackenfell.long);
+  const distanceToStrand = calculateDistance(lat, long, strand.lat, strand.long);
+
+  let closestBranch;
+  if (distanceToBrackenfell < distanceToStrand) {
+    closestBranch = brackenfell;
+  } else {
+    closestBranch = strand;
+  }
+
+  res.json({ branch: closestBranch, price: closestBranch.price });
+});
+
+function calculateDistance(lat1, lon1, lat2, lon2) {
+  const R = 6371; // Radius of the earth in km
+  const dLat = deg2rad(lat2 - lat1);
+  const dLon = deg2rad(lon2 - lon1);
+  const a = 
+    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+    Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * 
+    Math.sin(dLon / 2) * Math.sin(dLon / 2);
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  const distance = R * c;
+  return distance;
+}
+
+function deg2rad(deg) {
+  return deg * (Math.PI / 180);
+}
+
 
 app.get('/scontact', (req, res) => {
     res.render('scontact', { title: 'Contact Us', sitetitle: 'Pick n Ink', branch: 'Strand', description: 'Contact us' });
