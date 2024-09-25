@@ -13,6 +13,7 @@ const bcrypt = require('bcrypt');
 const session = require('express-session');
 const req = require('express/lib/request');
 const res = require('express/lib/response');
+const crypto = require('crypto');
 
 
 const app = express();
@@ -218,11 +219,94 @@ app.get('/bcontact', (req, res) => {
 });
 
 app.get('/login', (req, res) => {
-  res.render('admin/login', { title: 'Admin Login', sitetitle: 'Pick n Ink', });
+  res.render('admin/login', { title: 'Admin Login', sitetitle: 'Pick n Ink', branch: 'Admin Login', description: 'Admin Login Page' });
 });
 
 app.get('/register', (req, res) => {
-  res.render('admin/register', { title: 'Admin Register', sitetitle: 'Pick n Ink'});
+  res.render('admin/register', { title: 'Admin Register', sitetitle: 'Pick n Ink', branch: 'Admin Login', description: 'Admin Sign Up'});
+});
+
+app.get('/reset-password', (req, res) => {
+  res.render('reset-password', { title: 'Reset Password', sitetitle: 'Pick n Ink', branch: 'Reset Password'});
+});
+
+// Route to request password reset
+app.post('/reset-password', (req, res) => {
+  const email = req.body.email;
+
+  // Check if the email exists in the database
+  const query = 'SELECT * FROM users WHERE email = ?';
+  db.query(query, [email], (err, result) => {
+    if (err || result.length === 0) {
+      return res.status(400).send('Email not found');
+    }
+
+    // Generate a secure random token
+    const token = crypto.randomBytes(32).toSting('hex');
+    const resetTokenExpiry = new Date(Date.now() + 3600000); // Token valid for 1 hour
+
+    // Save token and expiry to the database
+    const updateQuery = 'UPDATE users SET reset_token = ?, reset_token_expiry = ? WHERE email = ?';
+    db.query(updateQuery, [token, resetTokenExpiry, email], (err, result) => {
+      if (err) {
+        return res.status(500).send('Error saving reset token');
+      }
+
+      // Send email with reset link
+      const resetLink = 'https://${req.headers.host}/reset/${token}';
+      const mailOptions = {
+        from: process.env.EMAIL_USER,
+        to: email,
+        subject: 'Password Reset',
+        text: 'You requested a password reset. Clnk the link below to reset your password: \n\n${resetLink}',
+      };
+
+      transporter.sendMail(mailOptions, (err, info) => {
+        if (err) {
+          return res.status(500).send('Error sending mail');
+        }
+        res.send('Reset link send to your email');
+      });
+    });
+  });
+});
+
+// Route to verify token and reset password
+app.get('/reset/:token', (req, res) => {
+  const token = req.params.token;
+
+  // Check if token is valid and not expired
+  const query = 'SELECT * FROM users WHERE reset_token = ? AND reset_token_expiry > NOW()';
+  db.query(query, [token], (err, result) => {
+    if (err || result.length === 0) {
+      return res.status(400).send('Invalid or expired token');
+    }
+
+    // Render the reset password page (reset.ejs)
+    res.render('reset', { token });
+  });
+});
+
+app.post('/reset/:token', (req, res) => {
+  const token = req.params.token;
+  const newPassword = req.body.password;
+
+  // Validate and hash the new password
+  if (newPassword.length < 6) {
+    return res.status(400).send('Password must be at least 6 characters long');
+  }
+
+  const hashedPassword = bcrypt.hashSync(newPassword, 10);
+
+  // Update the user's password in the database
+  const query = 'UPDATE users SET password = ?, reset_token = NULL, reset_token_expiry = NULL WHERE reset_token = ?';
+  db.query(query, [hashedPassword, token], (err, result) => {
+    if (err || result.affectedRows === 0) {
+      return res.status(500).send('Error resetting password');
+    }
+
+    res.send('Password has been reset successfully');
+  });
 });
 
 

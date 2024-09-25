@@ -2,6 +2,12 @@ body {
     background-color: #e0e0e0;
     width: 100%;
   }
+
+  section {
+    padding: 5 ;
+    margin-top: 5;
+    margin-bottom: 5;
+  }
   
   .fakeimg {
     height: 300px;
@@ -52,6 +58,12 @@ body {
     border: 3px solid #aaa;
     border-radius: 10px;
     box-shadow: 0px 8px 16px rgba(0,0,0,0.4);
+    margin: 5vh;
+  }
+
+  .card {
+    margin-top: 5vh;
+    margin-bottom: 5vh;
   }
 
   .container li {
