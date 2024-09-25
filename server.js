@@ -7,12 +7,31 @@ const bodyParser = require('body-parser');
 const axios = require('axios');
 const http = require('http');
 const socketIO = require('socket.io');
-const TelegramBot = require('node-telegram-bot-api')
+const TelegramBot = require('node-telegram-bot-api');
+const mysql = require('mysql');
+const bcrypt = require('bcrypt');
+const session = require('express-session');
+const req = require('express/lib/request');
+const res = require('express/lib/response');
 
 
 const app = express();
 const server = http.createServer(app);
 const io = socketIO(server);
+const saltRounds = 10; //For bcrypt hashing
+
+// MySQL connection
+const db = mysql.createConnection ({
+  host: process.env.DBHOST,
+  user: process.env.DBUSER,
+  password: process.env.DBPASSWORD,
+  database: process.env.DBBASE
+});
+
+db.connect(err => {
+  if (err) throw err;
+  console.log('Connected to database');
+});
 
 // Telegram Bot setup
 const telegramBotToken = process.env.TELEGRAM_BOT_TOKEN;
@@ -34,6 +53,129 @@ app.use(express.static('public'));
 
 // Middleware to parse form data
 app.use(bodyParser.urlencoded({ extended: false}));
+app.use(bodyParser.json());
+
+
+// Session setup
+app.use(session({
+  secret: 'your-secret-key',
+  resave: false,
+  saveUninitialized: true,
+}));
+
+// Check if user is authenticated
+function isAuthenticated(req, res, next) {
+  if (req.session.admin) {
+    return next();
+  } else {
+    res.redirect('/admin/login');
+  }
+}
+
+// Admin Login Page (GET)
+app.get('/admin/login', (req, res) => {
+  res.render('admin/login');
+});
+
+// Handle Admin Login (POST)
+app.post('/admin/login', (req, res) => {
+  const { username, password } = req.body;
+
+  console.log('Username entered:', username); // Debugging
+
+  const query = 'SELECT * FROM admins WHERE LOWER(username) = LOWER(?)';
+  db.query(query, [username.trim()], (err, results) => {
+    if (err) {
+      console.error(err);
+      return res.send('Database error');
+    };
+
+    if (results.length > 0) {
+      const admin = results[0];
+      console.log('Admin Found:', admin); // Debugging
+
+      //Compare hashed password
+      bcrypt.compare(password, admin.password, (err, isMatch) => {
+        if (isMatch) {
+          req.session.admin = admin; // Save admin in session
+          newFunction(); // Redirect to dashboard
+        } else {
+          res.send('Invalid Credentials'); // Incorrect Password
+        } 
+
+
+        function newFunction() {
+          res.redirect('dashboard');
+        }
+      });
+    } else {
+      console.log('Admin not found');
+      res.send('Admin not found'); // Admin username doesnt exist
+     }
+  });
+});
+
+// Admin Logout
+app.get('/admin/logout', (req, res) => {
+  req.session.destroy();
+  res.redirect('/admin/login');
+});
+
+// Admin Dashboard (Protected Route)
+app.get('/admin/dashboard', isAuthenticated, (req, res) => {
+  res.render('admin/dashboard', { admin: req.session.admin});
+});
+
+// Add Product Page (Protected Route)
+app.get('/admin/add-product', isAuthenticated, (req, res) => {
+  res.render('admin/add-product');
+});
+// Handle add product (post)
+app.post('/admin/add-product', isAuthenticated, (req, ress) => {
+  const { name, description, image_url, category, stock, price_brackenfell, price_strand } =req.body;
+
+  const query = 'INSERT INTO products (name, description, image_url, category, stock, price_brackenfell, price_strand) VALUES (?, ?, ?, ?, ?, ?, ?)';
+  db.query(query, [name, description, image_url, category, stock, price_brackenfell, price_strand], (err, result) => {
+    if (err) throw err;
+    res.send('Product added successfully');
+  });
+});
+
+// Admin Registertion Page (GET)
+app.get('admin/register', (req, res) => {
+  res.render('register');
+});
+
+// Handle Admin Registration (POST)
+app.post('/admin/register', (req, res) =>{
+  const { username, password } = req.body;
+
+  console.log('Registering new admin:', username); // Debugging
+
+  // Check if username already exist
+  const checkQuery = 'SELECT * FROM admins WHERE username = ?';
+  db.query(checkQuery, [username.trim()], (err, results) => {
+    if (err) throw err;
+
+    if (results.length > 0) {
+      // Username already exist
+      res.send('Username already exist.');
+    } else {
+      // Hash pasword and save admin to database
+      bcrypt.hash(password, saltRounds, (err, hash) => {
+        if (err) throw err;
+      
+        const query = 'INSERT INTO admins (username, password) VALUES (?, ?)';
+        db.query(query, [username.trim(), hash], (err, results) => {
+          if (err) throw err;
+          console.log('Admin registered successfully:', results); // Debugging
+          res.redirect('/login'); // Redirect to login after succsefull
+        });
+      });
+    }
+  });
+});
+
 
 // Routes
 app.get('/', (req, res) => {
@@ -52,6 +194,17 @@ app.get('/service', (req, res) => {
   res.render('service', { title: 'Service', sitetitle: 'Pick n Ink', branch: 'Pick n Ink', features: ['Feature 1', 'Feature 2', 'Feature 3'] });
 });
 
+app.get('/products', (req, res) => {
+  const query = 'SELECT * FROM products';
+  db.query(query, (err, results) => {
+    if (err) {
+      return res.status(500).send('Database query error');
+    }
+    console.log(results); // Debugging output
+    res.render('product', { products: results });
+  });
+});
+
 app.get('/babout', (req, res) => {
     res.render('babout', { title: 'About Us', sitetitle: 'Pick n Ink', description: 'About us', branch: 'Brackenfell'});
 });
@@ -63,6 +216,15 @@ app.get('/sabout', (req, res) => {
 app.get('/bcontact', (req, res) => {
     res.render('bcontact', { title: 'Contact Us', sitetitle: 'Pick n Ink', branch: 'Brackenfell', description: 'Contact us' });
 });
+
+app.get('/login', (req, res) => {
+  res.render('admin/login', { title: 'Admin Login', sitetitle: 'Pick n Ink', });
+});
+
+app.get('/register', (req, res) => {
+  res.render('admin/register', { title: 'Admin Register', sitetitle: 'Pick n Ink'});
+});
+
 
 // Handle form submission and send emails
 app.post('/bcontact', async (req, res) => {
