@@ -1,0 +1,20 @@
+const express = require('express');
+const router = express.Router();
+const bcrypt = require('bcrypt');
+
+// Register Router
+
+router.post('/register', async (req, res) => {
+    const { username, password } = req.body;
+    const hashedPassword = await bcrypt.hash(password, 10);
+    bd.query('INSERT INTO users (username, password) VALUES (?, ?)', [username, hashedPassword], (err) => {
+    if (err) {
+        return res.status(500).send('Error registering user');
+    }
+    res.redirect('/auth/login');
+    });
+});
+
+// Login Router
+
+router.post('/login', (req, res) => {})

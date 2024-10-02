@@ -29,7 +29,7 @@ body {
 
   .map {
     border: 2px solid silver;
-    width: 400px;
+    width: 400;
     height: 450px;
   }
 

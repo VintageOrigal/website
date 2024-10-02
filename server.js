@@ -35,7 +35,32 @@ app.use(express.static('public'));
 // Middleware to parse form data
 app.use(bodyParser.urlencoded({ extended: false}));
 
+// MySQL database connection (mail)
+
+const mysql = require('mysql');
+const connection = mysql.createConnection({
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME
+});
+
+db.connect((err) => {
+  if (err) throw err;
+  console.log('Connected to MySQL (mail) database');
+});
+
+
 // Routes
+
+// Mail route
+
+const authRoutes = require('./routes/auth');
+const mailboxRoutes = require('./routes/mailboxes');
+app.use ('/auth', authRoutes);
+app.use ('/mailboxes', mailboxRoutes);
+
+// Home route
 app.get('/', (req, res) => {
   res.render('index', { title: 'Home', sitetitle: 'Pick n Ink', branch: 'Pick n Ink', description: 'Welcome to My Node.js Website' });
 });
@@ -119,7 +144,7 @@ app.post('/bcontact', async (req, res) => {
         text: `
           Dear ${name},
   
-          Thank you for getting in touch! We have received your message and will get back to you soon.
+          Thank you for getting in touch! <br> We have received your message and will get back to you soon.
   
           Your message:
           ${message}
